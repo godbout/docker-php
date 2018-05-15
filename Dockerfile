@@ -1,4 +1,4 @@
-FROM php:7
+FROM php:7.1
 MAINTAINER Fabio Montefuscolo <fabio.montefuscolo@gmail.com>
 
 RUN apt-get update \
