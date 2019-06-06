@@ -1,8 +1,10 @@
 FROM php:7
-MAINTAINER Fabio Montefuscolo <fabio.montefuscolo@gmail.com>
+
+LABEL mantainer "TikiWiki <tikiwiki-devel@lists.sourceforge.net>"
+LABEL PHP_VERSION=7.3.4
 
 RUN apt-get update \
-    && apt-get install -y libldb-dev libldap2-dev libmemcached-dev libpng-dev libjpeg-dev unzip \
+    && apt-get install -y libldb-dev libldap2-dev libmemcached-dev libpng-dev libjpeg-dev libzip-dev unzip \
     && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
     && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
@@ -22,7 +24,7 @@ RUN apt-get update \
         composer global require psy/psysh --prefer-stable; \
     } \
     && rm installer.php \
-    && apt-get purge -y libldb-dev libldap2-dev libmemcached-dev libpng-dev libjpeg-dev \
+    && apt-get purge -y libldb-dev libldap2-dev libmemcached-dev libpng-dev libjpeg-dev libzip-dev \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && { \
@@ -33,7 +35,6 @@ RUN apt-get update \
     } > /usr/local/etc/php/conf.d/docker-uploads.ini
 
 COPY root/ /
-EXPOSE 80 443
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["psysh"]
